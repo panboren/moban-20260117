@@ -31,6 +31,11 @@ app.use(i18n)
 
 setupPlugins(app)
 
+// 全局错误处理
+app.config.errorHandler = (err: any, vm, info) => {
+  console.error('全局错误:', err, vm, info)
+}
+
 app.mount('#app')
 
 useTheme().initTheme()

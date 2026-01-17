@@ -35,5 +35,6 @@ declare module 'vue' {
     OptimizedImage: typeof import('./../components/OptimizedImage/OptimizedImage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Table: typeof import('./../components/Table/index.vue')['default']
   }
 }
