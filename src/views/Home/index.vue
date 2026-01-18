@@ -2,32 +2,32 @@
   <div class="home">
     <el-card>
       <template #header>
-        <span>欢迎使用 MyAdmin 管理系统</span>
+        <span>{{ t('home.welcome') }}</span>
       </template>
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-statistic title="用户总数" :value="1234" />
+          <el-statistic :title="t('home.totalUsers')" :value="1234" />
         </el-col>
         <el-col :span="6">
-          <el-statistic title="文章数量" :value="567" />
+          <el-statistic :title="t('home.articleCount')" :value="567" />
         </el-col>
         <el-col :span="6">
-          <el-statistic title="访问量" :value="8901" />
+          <el-statistic :title="t('home.totalViews')" :value="8901" />
         </el-col>
         <el-col :span="6">
-          <el-statistic title="今日访问" :value="234" />
+          <el-statistic :title="t('home.todayViews')" :value="234" />
         </el-col>
       </el-row>
     </el-card>
 
     <el-card style="margin-top: 20px">
       <template #header>
-        <span>最近活动</span>
+        <span>{{ t('home.recentActivity') }}</span>
       </template>
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180" />
-        <el-table-column prop="name" label="用户" width="180" />
-        <el-table-column prop="action" label="操作" />
+        <el-table-column prop="date" :label="t('home.date')" width="180" />
+        <el-table-column prop="name" :label="t('home.user')" width="180" />
+        <el-table-column prop="action" :label="t('home.action')" />
       </el-table>
     </el-card>
   </div>
@@ -35,6 +35,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const tableData = ref([
   {

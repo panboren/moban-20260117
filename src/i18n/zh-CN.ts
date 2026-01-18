@@ -52,6 +52,17 @@ export default {
     passwordRequired: '请输入密码',
     codeRequired: '请输入验证码'
   },
+  home: {
+    welcome: '欢迎使用 MyAdmin 管理系统',
+    totalUsers: '用户总数',
+    articleCount: '文章数量',
+    totalViews: '访问量',
+    todayViews: '今日访问',
+    recentActivity: '最近活动',
+    date: '日期',
+    user: '用户',
+    action: '操作'
+  },
   menu: {
     home: '首页',
     system: '系统管理',

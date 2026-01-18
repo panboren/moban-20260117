@@ -52,6 +52,17 @@ export default {
     passwordRequired: 'Please enter password',
     codeRequired: 'Please enter captcha'
   },
+  home: {
+    welcome: 'Welcome to MyAdmin Management System',
+    totalUsers: 'Total Users',
+    articleCount: 'Article Count',
+    totalViews: 'Total Views',
+    todayViews: 'Today Views',
+    recentActivity: 'Recent Activity',
+    date: 'Date',
+    user: 'User',
+    action: 'Action'
+  },
   menu: {
     home: 'Home',
     system: 'System',
