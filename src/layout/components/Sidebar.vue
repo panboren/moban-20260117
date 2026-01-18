@@ -69,4 +69,14 @@ const isCollapse = computed(() => !appStore.getLogo)
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .sidebar-container {
+    width: 100%;
+
+    .logo-container {
+      font-size: 16px;
+    }
+  }
+}
 </style>

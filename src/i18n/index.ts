@@ -7,9 +7,10 @@ const messages = {
   'en-US': enUS
 }
 
+const savedLocale = localStorage.getItem('locale')
 const i18n = createI18n({
   legacy: false,
-  locale: (localStorage.getItem('locale') as 'zh-CN' | 'en-US') || 'zh-CN',
+  locale: (savedLocale === 'zh-CN' || savedLocale === 'en-US' ? savedLocale : 'zh-CN') as 'zh-CN' | 'en-US',
   fallbackLocale: 'zh-CN',
   messages
 })

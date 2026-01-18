@@ -42,5 +42,17 @@ const cachedViews = computed(() => tagsViewStore.getCachedViews)
   opacity: 0;
   transform: translateX(30px);
 }
+
+@media screen and (max-width: 768px) {
+  .app-main {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .app-main {
+    padding: 8px;
+  }
+}
 </style>
 

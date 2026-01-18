@@ -1,6 +1,16 @@
 <template>
-  <div class="app-wrapper">
-    <Sidebar v-if="isSidebar" />
+  <div class="app-wrapper" :class="{ 'mobile': isMobile }">
+    <Sidebar v-if="isSidebar && !isMobile" />
+    <el-drawer
+      v-if="isMobile"
+      v-model="sidebarVisible"
+      direction="ltr"
+      :size="210"
+      :with-header="false"
+      class="mobile-drawer"
+    >
+      <Sidebar />
+    </el-drawer>
     <div class="main-container">
       <Header />
       <AppMain />
@@ -9,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import Sidebar from './components/Sidebar.vue'
 import Header from './components/Header.vue'
@@ -18,6 +28,29 @@ import AppMain from './components/AppMain.vue'
 const appStore = useAppStore()
 
 const isSidebar = computed(() => appStore.getLayout !== 'top')
+const isMobile = computed(() => appStore.getMobile)
+
+const sidebarVisible = computed({
+  get: () => appStore.getSidebarOpened,
+  set: (value) => appStore.setSidebarOpened(value)
+})
+
+const handleResize = () => {
+  const width = document.body.clientWidth
+  appStore.setMobile(width < 992)
+  if (width < 992) {
+    appStore.setSidebarOpened(false)
+  }
+}
+
+onMounted(() => {
+  handleResize()
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <style scoped lang="scss">
@@ -27,6 +60,12 @@ const isSidebar = computed(() => appStore.getLayout !== 'top')
   display: flex;
   background-color: var(--page-bg-color);
   transition: background-color 0.3s ease;
+
+  &.mobile {
+    .main-container {
+      margin-left: 0;
+    }
+  }
 }
 
 .main-container {
@@ -35,7 +74,13 @@ const isSidebar = computed(() => appStore.getLayout !== 'top')
   flex-direction: column;
   overflow: hidden;
   background-color: var(--page-bg-color);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, margin-left 0.3s ease;
+}
+
+.mobile-drawer {
+  :deep(.el-drawer__body) {
+    padding: 0;
+  }
 }
 
 .fade-transform-leave-active,

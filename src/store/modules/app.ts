@@ -22,6 +22,7 @@ interface AppState {
   mobile: boolean
   title: string
   locale: string
+  sidebarOpened: boolean
 }
 
 export const useAppStore = defineStore('app', {
@@ -49,7 +50,8 @@ export const useAppStore = defineStore('app', {
     pageLoading: false,
     mobile: false,
     title: import.meta.env.VITE_APP_TITLE,
-    locale: 'zh-CN'
+    locale: 'zh-CN',
+    sidebarOpened: true
   }),
   getters: {
     getLayout: (state) => state.layout,
@@ -62,7 +64,9 @@ export const useAppStore = defineStore('app', {
     getFixedHeader: (state) => state.fixedHeader,
     getPageLoading: (state) => state.pageLoading,
     getTitle: (state) => state.title,
-    getLocale: (state) => state.locale
+    getLocale: (state) => state.locale,
+    getMobile: (state) => state.mobile,
+    getSidebarOpened: (state) => state.sidebarOpened
   },
   actions: {
     setLayout(layout: LayoutType) {
@@ -97,6 +101,15 @@ export const useAppStore = defineStore('app', {
     },
     setLocale(locale: string) {
       this.locale = locale
+    },
+    setMobile(mobile: boolean) {
+      this.mobile = mobile
+    },
+    setSidebarOpened(opened: boolean) {
+      this.sidebarOpened = opened
+    },
+    toggleSidebar() {
+      this.sidebarOpened = !this.sidebarOpened
     }
   },
   persist: {
