@@ -25,14 +25,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { User, Setting, SwitchButton } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { useMessage } from '@/hooks/web/useMessage'
 
 const router = useRouter()
+const route = useRoute()
 const userStore = useUserStore()
-const { confirm } = useMessage()
+const { confirm, info } = useMessage()
 
 const username = computed(() => userStore.getUser?.username || 'Admin')
 const avatar = computed(() => userStore.getUser?.avatar || '')
@@ -40,10 +41,12 @@ const avatar = computed(() => userStore.getUser?.avatar || '')
 const handleCommand = async (command: string) => {
   switch (command) {
     case 'profile':
-      router.push('/profile')
+      // 暂时提示，因为 profile 页面未实现
+      info('个人中心功能开发中')
       break
     case 'settings':
-      router.push('/settings')
+      // 暂时提示，因为 settings 页面未实现
+      info('系统设置功能开发中')
       break
     case 'logout':
       try {
@@ -51,7 +54,7 @@ const handleCommand = async (command: string) => {
         await userStore.logoutAction()
         router.push('/login')
       } catch (error) {
-        console.error(error)
+        // 用户取消退出登录
       }
       break
   }

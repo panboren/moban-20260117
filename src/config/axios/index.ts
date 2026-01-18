@@ -22,7 +22,7 @@ let isRelogin = { show: false }
 // axios 实例
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
-  timeout: 60000,
+  timeout: 10000, // 10秒超时
   withCredentials: true
 })
 
@@ -146,7 +146,12 @@ const handle401 = () => {
   )
     .then(() => {
       removeAccessToken()
-      window.location.href = '/login'
+      // 清除存储的用户信息
+      localStorage.removeItem('permission-menus')
+      // 如果不在登录页，跳转到登录页
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login'
+      }
       isRelogin.show = false
     })
     .catch(() => {

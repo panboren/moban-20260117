@@ -19,6 +19,8 @@ export type ComponentElRef<T extends HTMLElement = HTMLDivElement> = {
   $props: any
 } & AnyObject
 
+export type LayoutMode = 'classic' | 'top' | 'mix' | 'mobile'
+
 export interface AnyObject {
   [key: string]: any
 }
@@ -122,4 +124,83 @@ export interface LoginInfo {
   code?: string
   uuid?: string
   tenantId?: string
+}
+
+// 错误日志
+export interface ErrorLog {
+  type: 'vue' | 'promise' | 'window' | 'resource' | 'console' | 'manual'
+  message: string
+  stack?: string
+  filename?: string
+  lineno?: number
+  colno?: number
+  info?: string
+  url?: string
+  time: string
+  context?: Record<string, any>
+}
+
+// 错误捕获负载
+export interface ErrorCapturedPayload {
+  err: Error
+  vm: any
+  info: string
+}
+
+// Vue 组件错误
+export interface ComponentError {
+  err: Error
+  vm: any
+  info: string
+}
+
+// 性能指标
+export interface PerformanceMetrics {
+  FCP?: number
+  LCP?: number
+  FID?: number
+  CLS?: number
+  TTFB?: number
+  firstRender?: number
+  routeChange?: number
+  apiRequest?: number[]
+  slowResources?: PerformanceEntry[]
+  longTasks?: PerformanceEntry[]
+}
+
+// 虚拟列表项
+export interface VirtualListItem {
+  id: string | number
+  [key: string]: any
+}
+
+// 请求配置
+export interface RequestConfig {
+  signal?: AbortSignal
+  [key: string]: any
+}
+
+// 图片预览配置
+export interface ImagePreviewConfig {
+  srcList: string[]
+  initialIndex?: number
+  modelValue: boolean
+}
+
+// 无限滚动配置
+export interface InfiniteScrollConfig<T> {
+  dataSource: T[]
+  onLoadMore: (page: number) => Promise<T[]>
+  pageSize?: number
+  distance?: number
+}
+
+// 骨架屏配置
+export interface SkeletonConfig {
+  rows?: number
+  titleRows?: number
+  avatar?: boolean
+  paragraph?: boolean
+  title?: boolean
+  animated?: boolean
 }

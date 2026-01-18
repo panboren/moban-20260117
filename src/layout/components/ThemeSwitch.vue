@@ -2,7 +2,7 @@
   <el-dropdown trigger="click" @command="handleCommand">
     <span class="theme-switch">
       <el-switch
-        v-model="isDark"
+        :model-value="isDark"
         inline-prompt
         :active-icon="Moon"
         :inactive-icon="Sunny"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { Moon, Sunny } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { useTheme } from '@/utils/theme'
@@ -33,21 +33,12 @@ import { useTheme } from '@/utils/theme'
 const appStore = useAppStore()
 const theme = useTheme()
 
-const isDark = computed({
-  get: () => appStore.getIsDark,
-  set: (val) => {
-    appStore.setIsDark(val)
-    if (val) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }
-})
+const isDark = computed(() => appStore.getIsDark)
 
 const toggleTheme = () => {
-  appStore.setIsDark(isDark.value)
-  if (isDark.value) {
+  const newValue = !isDark.value
+  appStore.setIsDark(newValue)
+  if (newValue) {
     document.documentElement.classList.add('dark')
   } else {
     document.documentElement.classList.remove('dark')
@@ -76,10 +67,6 @@ const handleCommand = (command: string) => {
     theme.setSideMenuTheme('#ffffff')
   }
 }
-
-onMounted(() => {
-  theme.initTheme()
-})
 </script>
 
 <style scoped>

@@ -25,6 +25,15 @@
 - 🚀 **高性能** - 基于 Vite 的极速开发体验
 - 📦 **组件丰富** - 封装了大量常用组件
 - 🔧 **工具完善** - 完整的工具函数和 Hooks
+- 🛡️ **错误处理** - 全局错误捕获和友好提示
+- 📊 **性能监控** - 实时性能指标监控
+- ⚡ **虚拟滚动** - 高性能大列表渲染
+- 🔄 **无限滚动** - 自动加载更多数据
+- 🏗️ **骨架屏** - 优雅的加载占位
+- 🎭 **错误边界** - 组件错误捕获
+- 🖼️ **图片预览** - 支持缩放、旋转、翻转
+- 📡 **Service Worker** - 离线支持和缓存策略
+- 📱 **PWA** - 渐进式 Web 应用支持
 
 ## 🛠️ 技术栈
 
@@ -64,29 +73,52 @@ npm run preview
 ```
 moban-20260117/
 ├── public/                 # 静态资源
+│   ├── sw.js              # Service Worker
+│   ├── manifest.json      # PWA 配置
+│   └── robots.txt         # SEO 配置
 ├── src/
 │   ├── api/               # API 接口
 │   ├── assets/            # 资源文件
 │   ├── components/        # 公共组件
+│   │   ├── VirtualList/   # 虚拟列表
+│   │   ├── InfiniteScroll/# 无限滚动
+│   │   ├── Skeleton/      # 骨架屏
+│   │   ├── ErrorBoundary/ # 错误边界
+│   │   ├── ImagePreview/  # 图片预览
 │   │   └── Table/         # 表格组件
 │   ├── config/            # 配置文件
 │   │   └── axios/         # Axios 配置
+│   ├── core/              # 核心模块
+│   │   ├── GlobalErrorHandler.ts # 全局错误处理
+│   │   ├── PerformanceMonitor.ts  # 性能监控
+│   │   └── ServiceWorker.ts       # Service Worker
 │   ├── composables/       # 组合式函数
 │   ├── directives/        # 自定义指令
-│   │   └── permission.ts   # 权限指令
+│   │   ├── permission/    # 权限指令
+│   │   └── loading/       # Loading 指令
 │   ├── hooks/             # 自定义 Hooks
+│   │   └── core/          # 核心 Hooks
+│   │       ├── useRequest.ts        # 请求管理
+│   │       ├── useVirtualList.ts   # 虚拟列表
+│   │       └── useInfiniteScroll.ts # 无限滚动
 │   ├── i18n/              # 国际化配置
 │   ├── layout/            # 布局组件
 │   ├── locales/           # 语言包
+│   ├── plugins/           # 插件配置
 │   ├── router/            # 路由配置
 │   ├── store/             # 状态管理
 │   │   └── modules/       # Store 模块
+│   │       ├── user.ts
+│   │       ├── permission.ts
+│   │       ├── app.ts
+│   │       └── settings.ts
 │   ├── styles/            # 样式文件
 │   ├── types/             # 类型定义
 │   ├── utils/             # 工具函数
 │   ├── views/             # 页面视图
 │   ├── App.vue            # 根组件
-│   └── main.ts            # 入口文件
+│   ├── main.ts            # 入口文件
+│   └── permission.ts      # 路由守卫
 ├── .env                   # 环境变量
 ├── vite.config.ts         # Vite 配置
 └── package.json           # 依赖配置
@@ -100,11 +132,6 @@ moban-20260117/
 <!-- 按钮权限 -->
 <el-button v-permission="['system:user:add']">新增</el-button>
 <el-button v-permission="['system:user:edit']">编辑</el-button>
-```
-
-```typescript
-// 路由权限 - 动态路由加载
-// 数据权限 - 基于用户角色的数据过滤
 ```
 
 ### 📡 请求系统
@@ -125,19 +152,92 @@ await upload('/api/upload', file)
 await download('/api/export', 'data.xlsx')
 ```
 
-### 🧩 组件封装
+### 📊 性能监控
+
+```typescript
+import { usePerformance } from '@/core/PerformanceMonitor'
+
+const { metrics, score, report } = usePerformance()
+
+console.log(`性能评分: ${score.value}/100`)
+console.log(report.value)
+```
+
+### 🛡️ 全局错误处理
+
+```typescript
+import { globalErrorHandler } from '@/core/GlobalErrorHandler'
+
+// 手动上报错误
+globalErrorHandler.report(new Error('自定义错误'))
+
+// 获取错误日志
+const logs = globalErrorHandler.getErrorLogs()
+```
+
+### 📋 虚拟列表
 
 ```vue
-<!-- 表格组件 -->
+<VirtualList
+  :data="list"
+  :item-height="50"
+  :height="500"
+>
+  <template #default="{ item, index }">
+    <div>{{ item.name }}</div>
+  </template>
+</VirtualList>
+```
+
+### ♾️ 无限滚动
+
+```vue
+<InfiniteScroll @load="loadMore">
+  <div v-for="item in list" :key="item.id">
+    {{ item.name }}
+  </div>
+</InfiniteScroll>
+```
+
+### 💎 骨架屏
+
+```vue
+<Skeleton :rows="5" :avatar="true" animated>
+  <div>加载完成后显示的内容</div>
+</Skeleton>
+```
+
+### 🎭 错误边界
+
+```vue
+<ErrorBoundary @error="handleError">
+  <YourComponent />
+</ErrorBoundary>
+```
+
+## 🧩 组件封装
+
+### Table 表格组件
+
+```vue
 <Table
   :data="tableData"
   :columns="columns"
   :loading="loading"
   :total="total"
   @page-change="handlePageChange"
-/>
+>
+  <template #status="scope">
+    <el-tag :type="scope.row.status === 1 ? 'success' : 'danger'">
+      {{ scope.row.status === 1 ? '启用' : '禁用' }}
+    </el-tag>
+  </template>
+</Table>
+```
 
-<!-- 表单组件 -->
+### Form 表单组件
+
+```vue
 <Form
   :schema="formSchema"
   :model="formData"
@@ -145,7 +245,7 @@ await download('/api/export', 'data.xlsx')
 />
 ```
 
-### 🌍 国际化
+## 🌍 国际化
 
 ```typescript
 import { useI18n } from 'vue-i18n'
@@ -207,4 +307,3 @@ git commit -m "fix: 修复登录接口调用错误"
 <div align="center">
 Made with ❤️ by MyAdmin Team
 </div>
-

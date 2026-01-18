@@ -26,7 +26,7 @@ export function useMessage() {
     message: string,
     title: string = '提示',
     options: any = {}
-  ): Promise<MessageBoxData> => {
+  ): Promise<string | number | undefined> => {
     return ElMessageBox.confirm(message, title, {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
