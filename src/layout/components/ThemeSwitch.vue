@@ -2,7 +2,7 @@
   <el-dropdown trigger="click" @command="handleCommand">
     <span class="theme-switch">
       <el-switch
-        :model-value="isDark"
+        v-model="isDark"
         inline-prompt
         :active-icon="Moon"
         :inactive-icon="Sunny"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Moon, Sunny } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { useTheme } from '@/utils/theme'
@@ -33,16 +33,20 @@ import { useTheme } from '@/utils/theme'
 const appStore = useAppStore()
 const theme = useTheme()
 
-const isDark = computed(() => appStore.getIsDark)
+const isDark = computed({
+  get: () => appStore.getIsDark,
+  set: (value: boolean) => {
+    appStore.setIsDark(value)
+    if (value) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+})
 
 const toggleTheme = () => {
-  const newValue = !isDark.value
-  appStore.setIsDark(newValue)
-  if (newValue) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
+  // v-model 会自动处理切换
 }
 
 const themeColors = [

@@ -28,8 +28,10 @@ const appStore = useAppStore()
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  border-bottom: 1px solid var(--el-border-color);
-  background-color: var(--app-header-bg-color, #fff);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--top-header-bg-color);
+  color: var(--top-header-text-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 
   .right-menu {
     display: flex;

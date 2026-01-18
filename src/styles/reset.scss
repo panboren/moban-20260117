@@ -26,16 +26,22 @@ ol {
   list-style: none;
 }
 
+/* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #dcdfe6;
+  background: var(--text-placeholder);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f2f5;
+  background: var(--page-bg-color);
+}
+
+/* 暗黑模式下的滚动条 */
+html.dark::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
 }

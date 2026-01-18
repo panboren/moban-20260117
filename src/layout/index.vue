@@ -25,6 +25,8 @@ const isSidebar = computed(() => appStore.getLayout !== 'top')
   width: 100%;
   height: 100vh;
   display: flex;
+  background-color: var(--page-bg-color);
+  transition: background-color 0.3s ease;
 }
 
 .main-container {
@@ -32,6 +34,8 @@ const isSidebar = computed(() => appStore.getLayout !== 'top')
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: var(--page-bg-color);
+  transition: background-color 0.3s ease;
 }
 
 .fade-transform-leave-active,

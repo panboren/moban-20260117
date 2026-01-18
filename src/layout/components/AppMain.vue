@@ -24,7 +24,8 @@ const cachedViews = computed(() => tagsViewStore.getCachedViews)
   flex: 1;
   padding: 20px;
   overflow: auto;
-  background-color: #f0f2f5;
+  background-color: var(--page-bg-color);
+  transition: background-color 0.3s ease;
 }
 
 .fade-transform-enter-active,
