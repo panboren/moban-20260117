@@ -37,15 +37,15 @@ const isCollapse = computed(() => !appStore.getLogo)
 .sidebar-container {
   width: 210px;
   height: 100vh;
-  background-color: #001529;
-  transition: width 0.28s;
+  background-color: var(--left-menu-bg-color);
+  transition: width 0.28s, background-color 0.3s ease;
 
   .logo-container {
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--logo-title-text-color);
     font-size: 18px;
     font-weight: bold;
   }
@@ -55,16 +55,17 @@ const isCollapse = computed(() => !appStore.getLogo)
   }
 
   :deep(.el-menu-item) {
-    color: #bfcbd9;
-    background-color: #001529;
+    color: var(--left-menu-text-color);
+    background-color: transparent;
 
     &:hover {
-      background-color: #263445;
+      background-color: var(--left-menu-bg-active-color);
+      opacity: 0.8;
     }
 
     &.is-active {
-      background-color: #409eff;
-      color: #fff;
+      background-color: var(--left-menu-bg-active-color);
+      color: var(--left-menu-text-active-color);
     }
   }
 }

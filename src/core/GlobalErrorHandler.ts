@@ -28,10 +28,10 @@ class GlobalErrorHandler {
     // 资源加载错误
     window.addEventListener('error', this.handleResourceError.bind(this), true)
 
-    // 控制台错误拦截（开发环境）
-    if (this.isDevelopment) {
-      this.interceptConsole()
-    }
+    // 禁用控制台拦截，避免循环问题
+    // if (this.isDevelopment) {
+    //   this.interceptConsole()
+    // }
   }
 
   /**

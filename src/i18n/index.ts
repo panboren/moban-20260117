@@ -9,15 +9,16 @@ const messages = {
 
 const i18n = createI18n({
   legacy: false,
-  locale: (localStorage.getItem('locale') as string) || 'zh-CN',
+  locale: (localStorage.getItem('locale') as 'zh-CN' | 'en-US') || 'zh-CN',
   fallbackLocale: 'zh-CN',
   messages
 })
 
 export default i18n
 
-export function setI18nLanguage(locale: string) {
+export function setI18nLanguage(locale: 'zh-CN' | 'en-US') {
   i18n.global.locale.value = locale
   localStorage.setItem('locale', locale)
   document.querySelector('html')?.setAttribute('lang', locale)
 }
+

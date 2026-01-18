@@ -137,7 +137,7 @@ service.interceptors.response.use(
               type: 'warning'
             })
             removeToken()
-            router.push('/login')
+            window.location.reload()
             return Promise.reject(new Error(errorMessage))
           }
         } catch (error) {
@@ -147,7 +147,7 @@ service.interceptors.response.use(
             type: 'warning'
           })
           removeToken()
-          router.push('/login')
+          window.location.reload()
           return Promise.reject(error)
         } finally {
           isRefreshing = false

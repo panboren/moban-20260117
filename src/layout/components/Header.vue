@@ -3,6 +3,7 @@
     <Logo v-if="appStore.getLogo" />
     <Breadcrumb v-if="appStore.getBreadcrumb" />
     <div class="right-menu">
+      <LangSwitch />
       <ThemeSwitch />
       <Screenfull />
       <UserDropdown />
@@ -14,6 +15,7 @@
 import { useAppStore } from '@/store/modules/app'
 import Logo from './Logo.vue'
 import Breadcrumb from './Breadcrumb.vue'
+import LangSwitch from './LangSwitch.vue'
 import ThemeSwitch from './ThemeSwitch.vue'
 import Screenfull from './Screenfull.vue'
 import UserDropdown from './UserDropdown.vue'

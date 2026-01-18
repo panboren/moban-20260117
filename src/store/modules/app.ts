@@ -21,6 +21,7 @@ interface AppState {
   pageLoading: boolean
   mobile: boolean
   title: string
+  locale: string
 }
 
 export const useAppStore = defineStore('app', {
@@ -47,7 +48,8 @@ export const useAppStore = defineStore('app', {
     footer: true,
     pageLoading: false,
     mobile: false,
-    title: import.meta.env.VITE_APP_TITLE
+    title: import.meta.env.VITE_APP_TITLE,
+    locale: 'zh-CN'
   }),
   getters: {
     getLayout: (state) => state.layout,
@@ -59,7 +61,8 @@ export const useAppStore = defineStore('app', {
     getLogo: (state) => state.logo,
     getFixedHeader: (state) => state.fixedHeader,
     getPageLoading: (state) => state.pageLoading,
-    getTitle: (state) => state.title
+    getTitle: (state) => state.title,
+    getLocale: (state) => state.locale
   },
   actions: {
     setLayout(layout: LayoutType) {
@@ -91,6 +94,9 @@ export const useAppStore = defineStore('app', {
     },
     setTitle(title: string) {
       this.title = title
+    },
+    setLocale(locale: string) {
+      this.locale = locale
     }
   },
   persist: {
